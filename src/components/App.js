@@ -1,7 +1,28 @@
 import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
 import db from '../util/db';
+import Background from '../images/background.png'
 import WelcomeScreen from './WelcomeScreen';
 import BudgetCalculator from './BudgetCalculator';
+import { Button } from '@material-ui/core';
+
+const styles = {
+  container: {
+    width: '100vw',
+    height: '100vh',
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    backgroundImage: `url(${Background})`,
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    backgroundAttachment: 'fixed',
+    backgroundPosition: 'center center',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
+};
 
 class App extends React.Component {
   constructor(props) {
@@ -29,6 +50,7 @@ class App extends React.Component {
 
   render() {
     const { budget, items } = this.state;
+    const { classes } = this.props; 
 
     const component = (!budget ?
       <WelcomeScreen onNext={this.setBudget} /> :
@@ -39,8 +61,12 @@ class App extends React.Component {
       />
     );
 
-    return <div>{component}</div>;
+    return (
+      <div className={classes.container}>
+        {component}
+      </div>
+    );
   }
 }
 
-export default App;
+export default withStyles(styles)(App);
