@@ -17,4 +17,11 @@ if (!firebase.apps.length) {
   firebase.initializeApp(config);
 }
 
-export default firebase.firestore();
+const database = firebase.firestore();
+
+const fetchCollection = async (collection) => {
+  const snapshot = await database.collection(collection).get();
+  return snapshot.docs.map(d => d.data());
+};
+
+export default { fetchCollection };
