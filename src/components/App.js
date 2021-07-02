@@ -9,6 +9,7 @@ import WelcomeScreen from './WelcomeScreen';
 import BudgetForm from './BudgetForm';
 import BudgetCalculator from './BudgetCalculator';
 import ThankYouScreen from './ThankYouScreen';
+import Step from './Step';
 
 const styles = {
   container: {
@@ -64,20 +65,36 @@ class App extends React.Component {
     const { budget, items, step } = this.state;
     const { classes } = this.props; 
 
-    let components = [
-      <WelcomeScreen onNext={this.stepForward} />,
-      <BudgetForm onSubmit={this.setBudget}/>,
-      <BudgetCalculator 
-        budget={budget} 
-        items={items} 
-        onSubmit={this.handleSubmit} 
-      />,
-      <ThankYouScreen />
-    ];
+    // let components = [
+    //   <WelcomeScreen onNext={this.stepForward} />,
+    //   <BudgetForm onSubmit={this.setBudget}/>,
+    //   <BudgetCalculator 
+    //     budget={budget} 
+    //     items={items} 
+    //     onSubmit={this.handleSubmit} 
+    //   />,
+    //   <ThankYouScreen />
+    // ];
 
     return (
       <div className={classes.container}>
-        {components[step]}
+        <Step number={0} currentStep={this.state.step}>
+          <WelcomeScreen onNext={this.stepForward} />
+        </Step>
+        <Step number={1} currentStep={this.state.step}>
+          <BudgetForm onSubmit={this.setBudget}/>
+        </Step>
+        <Step number={2} currentStep={this.state.step}>
+          <BudgetCalculator 
+            budget={budget} 
+            items={items} 
+            onSubmit={this.handleSubmit} 
+          />
+        </Step>
+        <Step number={3} currentStep={this.state.step}>
+          <ThankYouScreen />
+        </Step>
+        {/* {components[step]} */}
       </div>
     );
   }
