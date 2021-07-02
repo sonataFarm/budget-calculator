@@ -11,6 +11,15 @@ import ContentArea from './ContentArea';
 const styles = {
   carouselContainer: {
     width: '100%'
+  },
+  under: {
+    color: 'green'
+  },
+  over: {
+    color: 'red'
+  },
+  within: {
+    color: 'black'
   }
 };
 
@@ -78,6 +87,11 @@ class BudgetCalculator extends React.Component {
   render() {
     const { classes, budget, onSubmit } = this.props;
 
+    let budgetWarningClass =
+      this.selectedItemsPriceRange.hi < budget ? 'under' :
+      this.selectedItemsPriceRange.lo > budget ? 'over' :
+      'within';
+
     return (
       <ContentArea width="80%">
         <Typography variant="h4" align="center">
@@ -100,15 +114,17 @@ class BudgetCalculator extends React.Component {
           <Typography variant="subtitle1" align="center">
             Your budget: {currency.usd(budget)}
           </Typography>
-          <Typography 
-            variant="subtitle1" 
-            align="center" 
-            color={(
-              this.selectedItemsPriceRange.lo > budget ? 'error' : 'inherit'
-            )}
-          >
-            Estimated cost: {this.selectedItemsPriceRange.toString()}
-          </Typography>
+          <div className={classes[budgetWarningClass]}>
+            <Typography 
+              variant="subtitle1" 
+              align="center" 
+              color={(
+                this.selectedItemsPriceRange.lo > budget ? 'error' : 'inherit'
+              )}
+            >
+              Estimated cost: {this.selectedItemsPriceRange.toString()}
+            </Typography>
+          </div>
         </div>
         <Button 
           variant="contained" 
