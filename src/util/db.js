@@ -9,6 +9,10 @@ const COLLECTIONS = {
   carts: 'nateFestingerCarts'
 };
 
+if (!process.env.REACT_APP_FIREBASE_API_KEY) {
+  console.error('Expected environment variable `REACT_APP_FIREBASE_API_KEY`, but none was found.');
+}
+
 // configure firebase (https://firebase.google.com/docs/web/setup)
 const config = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -66,6 +70,12 @@ const deleteCollection = async collection => {
   snapshot.docs.forEach(d => d.ref.delete());
 };
 
-const client = { fetchCollection, fetchUniqueItems, setUser, setCart, deleteCollection };
+const client = { 
+  fetchCollection, 
+  fetchUniqueItems, 
+  setUser, 
+  setCart, 
+  deleteCollection 
+};
 
 export default client;
