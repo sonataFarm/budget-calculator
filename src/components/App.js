@@ -1,7 +1,9 @@
 import React from 'react';
+import _ from 'lodash';
 import { withStyles } from '@material-ui/core/styles';
 import db from '../util/db';
 import Background from '../images/background.png'
+import Item from '../util/item';
 import WelcomeScreen from './WelcomeScreen';
 import BudgetForm from './BudgetForm';
 import BudgetCalculator from './BudgetCalculator';
@@ -27,12 +29,7 @@ const styles = {
 class App extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = { 
-      items: [], 
-      budget: undefined,
-      step: 0
-    };
+    this.state = { items: [], budget: null, step: 0 };
   }
 
   componentDidMount() {
@@ -40,7 +37,9 @@ class App extends React.Component {
   }
 
   fetchAndSetItems = async () => {
-    const items = await db.fetchCollection('items');
+    let items = await db.fetchUniqueItems();
+    items = items.map(i => new Item(i));
+    console.log(items);
     this.setState({ items });
   };
 

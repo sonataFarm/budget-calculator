@@ -22,7 +22,7 @@ const MultiCarousel = (props) => {
   const columns = props.columns || 2;
   for (let i = 0; i < items.length; i += columns) {
     pages.push(
-      <div className={classes.page}>{items.slice(i, i + columns)}</div>
+      <div className={classes.page} key={i}>{items.slice(i, i + columns)}</div>
     );
   }
 

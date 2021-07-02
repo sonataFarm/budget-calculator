@@ -3,7 +3,7 @@ import { Box, Typography, makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   container: props => ({
-    width: 300,
+    width: 250,
     height: 40,
     margin: theme.spacing(1),
     border: `1px solid ${theme.palette.primary.dark}`,
@@ -12,7 +12,8 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    cursor: 'default'
+    cursor: 'default',
+    userSelect: 'none'
   })
 }));
 

@@ -40,7 +40,9 @@ class BudgetForm extends React.Component {
 
     return (
       <div className={classes.container}>
-        <Typography variant="h5" align="center" gutterBottom>Every dream yard starts with a budget.</Typography>
+        <Typography variant="h4" align="center" gutterBottom>
+          Every dream yard starts with a budget.
+        </Typography>
         <div className={classes.form}>
           <div>
             <InputLabel htmlFor="budget">Enter your budget:</InputLabel>

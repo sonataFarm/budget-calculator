@@ -1,5 +1,6 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
+import _ from 'lodash';
 
 // configure firebase (https://firebase.google.com/docs/web/setup)
 const config = {
@@ -24,4 +25,11 @@ const fetchCollection = async (collection) => {
   return snapshot.docs.map(d => d.data());
 };
 
-export default { fetchCollection };
+const fetchUniqueItems = async () => {
+  /* There seem to be duplicate items in the database :(
+     This seems like a reasonable place to store this logic. */
+  let items = await fetchCollection('items');
+  return  _.uniqWith(items, _.isEqual);
+};
+
+export default { fetchCollection, fetchUniqueItems };
