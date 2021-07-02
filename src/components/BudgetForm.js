@@ -1,7 +1,7 @@
 import React from 'react';
 import { Typography, InputAdornment, InputLabel, Input, Button, withStyles } from '@material-ui/core';
 import ContentArea from './ContentArea';
-
+import CurrencyInput from './CurrencyInput';
 
 const styles = {
   form: {
@@ -18,9 +18,8 @@ class BudgetForm extends React.Component {
     this.state = { value: '' };
   }
 
-  handleChange = e => {
-    e.preventDefault();
-    this.setState({ value: e.currentTarget.value });
+  handleChange = value => {
+    this.setState({ value });
   };
 
   render() {
@@ -33,15 +32,10 @@ class BudgetForm extends React.Component {
         </Typography>
         <div className={classes.form}>
           <div>
-            <InputLabel htmlFor="budget">Enter your budget:</InputLabel>
-            <Input
-              id="budget"
+            <CurrencyInput
               value={this.state.value}
+              label="Enter your budget:"
               onChange={this.handleChange}
-              size="med"
-              startAdornment={
-                <InputAdornment position="start">$</InputAdornment>
-              }
             />
           </div>
           <Button 
