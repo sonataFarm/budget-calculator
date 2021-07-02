@@ -3,8 +3,8 @@ import { withStyles } from '@material-ui/core/styles';
 import db from '../util/db';
 import Background from '../images/background.png'
 import WelcomeScreen from './WelcomeScreen';
+import BudgetForm from './BudgetForm';
 import BudgetCalculator from './BudgetCalculator';
-import { Button } from '@material-ui/core';
 
 const styles = {
   container: {
@@ -27,7 +27,12 @@ const styles = {
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { items: [], budget: undefined };
+    
+    this.state = { 
+      items: [], 
+      budget: undefined,
+      step: 0
+    };
   }
 
   componentDidMount() {
@@ -41,6 +46,7 @@ class App extends React.Component {
 
   setBudget = (budget) => {
     this.setState({ budget });
+    this.stepForward();
   };
 
   handleSubmit = () => {
@@ -48,25 +54,30 @@ class App extends React.Component {
     console.log(this.state.items);
   };
 
+  stepForward = () => {
+    this.setState({ step: ++this.state.step })
+  };
+
   render() {
-    const { budget, items } = this.state;
+    const { budget, items, step } = this.state;
     const { classes } = this.props; 
 
-    const component = (!budget ?
-      <WelcomeScreen onNext={this.setBudget} /> :
+    let components = [
+      <WelcomeScreen onNext={this.stepForward} />,
+      <BudgetForm onNext={this.setBudget}/>,
       <BudgetCalculator 
         budget={budget} 
         items={items} 
         onSubmit={this.handleSubmit} 
       />
-    );
+    ];
 
     return (
       <div className={classes.container}>
-        {component}
+        {components[step]}
       </div>
     );
   }
 }
 
-export default withStyles(styles)(App);
+export default withStyles(styles)(App); 
