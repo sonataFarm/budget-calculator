@@ -11,7 +11,10 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    borderRadius: 30
+    borderRadius: 30,
+    '& > *': {
+      margin: theme.spacing(1),
+    },
   }
 }));
 
