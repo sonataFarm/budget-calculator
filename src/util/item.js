@@ -4,6 +4,7 @@ import PriceRange from './price-range';
 class Item {
   constructor(options) {
     this.name = options.name;
+    this.id = options.id;
     this.type = new ItemType(options.type);
     this.priceRange = new PriceRange(
       // convert lowPrice and highPrice from cents to dollars
