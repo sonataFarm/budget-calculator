@@ -6,7 +6,7 @@ const WelcomeScreen = ({ onNext }) => {
   return (
     <ContentArea>
       <Typography variant="h1">Welcome to Yardzen.</Typography>
-      <Typography variant="h5" align="center" gutterBottom>Let's get started!</Typography>
+      <Typography variant="h6" align="center" gutterBottom>Let's get started!</Typography>
       <Button 
         variant="contained" 
         color="primary"

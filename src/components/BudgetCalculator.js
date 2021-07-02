@@ -132,7 +132,7 @@ class BudgetCalculator extends React.Component {
         <Button 
           variant="contained" 
           color="primary" 
-          onClick={() => onSubmit()} 
+          onClick={() => onSubmit(this.selectedItems)} 
           size="large"
         >
           Submit

@@ -1,5 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
+import faker from 'faker';
 import { withStyles } from '@material-ui/core/styles';
 import db from '../util/db';
 import Background from '../images/background.png'
@@ -7,6 +8,7 @@ import Item from '../util/item';
 import WelcomeScreen from './WelcomeScreen';
 import BudgetForm from './BudgetForm';
 import BudgetCalculator from './BudgetCalculator';
+import ThankYouScreen from './ThankYouScreen';
 
 const styles = {
   container: {
@@ -30,6 +32,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = { items: [], budget: null, step: 0 };
+    this.username = faker.internet.userName(); // we'll use this later when we persist to the DB
   }
 
   componentDidMount() {
@@ -48,11 +51,13 @@ class App extends React.Component {
   };
 
   handleSubmit = selectedItems => {
-    console.log(selectedItems);
+    db.setUser({ username: this.username });
+    db.setCart(selectedItems, this.username);
+    this.stepForward();
   };
 
   stepForward = () => {
-    this.setState({ step: ++this.state.step })
+    this.setState({ step: ++this.state.step });
   };
 
   render() {
@@ -66,7 +71,8 @@ class App extends React.Component {
         budget={budget} 
         items={items} 
         onSubmit={this.handleSubmit} 
-      />
+      />,
+      <ThankYouScreen />
     ];
 
     return (
