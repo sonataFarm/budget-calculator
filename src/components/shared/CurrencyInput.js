@@ -24,9 +24,6 @@ const CurrencyInput = ({ label, value, onChange }) => {
         value={renderValue()}
         onChange={handleChange}
         size="med"
-        startAdornment={
-          <InputAdornment position="start">$</InputAdornment>
-        }
       />
     </div>
   );
