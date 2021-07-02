@@ -30,7 +30,7 @@ class BudgetCalculator extends React.Component {
     this.state = {
       // each property on SelectedItems corresponds to an Item Type.
       // Its value corresponds to an item of that type, or null.
-      selectedItems: this.itemTypes.reduce((o, t) => {
+      selectedItemsByType: this.itemTypes.reduce((o, t) => {
         o[t.name] = null;
         return o;
       }, {})
@@ -44,8 +44,11 @@ class BudgetCalculator extends React.Component {
   };
 
   get selectedItemsPriceRange() {
-    const selectedItems = _.compact(Object.values(this.state.selectedItems));
-    return PriceRange.fromItems(selectedItems);
+    return PriceRange.fromItems(this.selectedItems);
+  }
+
+  get selectedItems() {
+    return _.compact(Object.values(this.state.selectedItemsByType))
   }
 
   renderItemsLists = () => {
@@ -61,7 +64,7 @@ class BudgetCalculator extends React.Component {
               <div> {/* This div required for tooltip to render */}
                 <Option 
                   value={i.name} 
-                  selected={this.state.selectedItems[t.name] === i}
+                  selected={this.state.selectedItemsByType[t.name] === i}
                   onClick={this.handleUpdateSelectedItems(t, i)}
                 />
               </div>
@@ -73,15 +76,15 @@ class BudgetCalculator extends React.Component {
   };
 
   handleUpdateSelectedItems = (itemType, item) => () => {
-    const nextSelectedItems = { ...this.state.selectedItems };
+    const nextSelectedItemsByType = { ...this.state.selectedItemsByType };
 
-    if (this.state.selectedItems[itemType.name] === item) {
-      nextSelectedItems[itemType.name] = null;
+    if (this.state.selectedItemsByType[itemType.name] === item) {
+      nextSelectedItemsByType[itemType.name] = null;
     } else {
-      nextSelectedItems[itemType.name] = item;
+      nextSelectedItemsByType[itemType.name] = item;
     }
 
-    this.setState({ selectedItems: nextSelectedItems })
+    this.setState({ selectedItemsByType: nextSelectedItemsByType })
   };
 
   render() {
@@ -129,7 +132,7 @@ class BudgetCalculator extends React.Component {
         <Button 
           variant="contained" 
           color="primary" 
-          onClick={onSubmit} 
+          onClick={() => onSubmit()} 
           size="large"
         >
           Submit

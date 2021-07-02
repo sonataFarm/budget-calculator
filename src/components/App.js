@@ -39,18 +39,16 @@ class App extends React.Component {
   fetchAndSetItems = async () => {
     let items = await db.fetchUniqueItems();
     items = items.map(i => new Item(i));
-    console.log(items);
     this.setState({ items });
   };
 
-  setBudget = (budget) => {
+  setBudget = budget => {
     this.setState({ budget });
     this.stepForward();
   };
 
-  handleSubmit = () => {
-    console.log(this.state.budget);
-    console.log(this.state.items);
+  handleSubmit = selectedItems => {
+    console.log(selectedItems);
   };
 
   stepForward = () => {
