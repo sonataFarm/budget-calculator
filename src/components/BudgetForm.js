@@ -1,28 +1,16 @@
 import React from 'react';
-import { fade } from '@material-ui/core/styles/colorManipulator';
 import { Typography, InputAdornment, InputLabel, Input, Button, withStyles } from '@material-ui/core';
+import ContentArea from './ContentArea';
 
-const styles = theme => ({
-  container: {
-    width: '70%',
-    height: 'auto',
-    padding: theme.spacing(3),
-    backgroundColor: fade('#ffffff', 0.8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    borderRadius: 30,
-    '& > *': {
-      margin: theme.spacing(1),
-    }
-  },
+
+const styles = {
   form: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center'
   }
-});
+};
 
 class BudgetForm extends React.Component {
   constructor(props) {
@@ -39,7 +27,7 @@ class BudgetForm extends React.Component {
     const { classes, onSubmit } = this.props;
 
     return (
-      <div className={classes.container}>
+      <ContentArea width="70%">
         <Typography variant="h4" align="center" gutterBottom>
           Every dream yard starts with a budget.
         </Typography>
@@ -65,7 +53,7 @@ class BudgetForm extends React.Component {
             Next
           </Button>
         </div>
-      </div>
+      </ContentArea>
     );
   }
 }
