@@ -1,7 +1,7 @@
 import React from 'react';
 import { Typography, InputAdornment, InputLabel, Input, Button, withStyles } from '@material-ui/core';
-import ContentArea from './ContentArea';
-import CurrencyInput from './CurrencyInput';
+import ContentArea from './shared/ContentArea';
+import CurrencyInput from './shared/CurrencyInput';
 
 const styles = {
   form: {

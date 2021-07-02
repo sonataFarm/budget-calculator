@@ -1,5 +1,5 @@
 import React from 'react';
-import currency from '../util/currency';
+import currency from '../../util/currency';
 import { InputLabel, Input, InputAdornment } from '@material-ui/core';
 
 const CurrencyInput = ({ label, value, onChange }) => {

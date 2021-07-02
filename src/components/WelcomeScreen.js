@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Typography } from '@material-ui/core';
-import ContentArea from './ContentArea';
+import ContentArea from './shared/ContentArea';
 
 const WelcomeScreen = ({ onNext }) => {
   return (

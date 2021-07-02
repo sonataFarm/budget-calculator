@@ -9,7 +9,7 @@ import WelcomeScreen from './WelcomeScreen';
 import BudgetForm from './BudgetForm';
 import BudgetCalculator from './BudgetCalculator';
 import ThankYouScreen from './ThankYouScreen';
-import Step from './Step';
+import Step from './shared/Step';
 
 const styles = {
   container: {
@@ -46,6 +46,10 @@ class App extends React.Component {
     this.setState({ items });
   };
 
+  stepForward = () => {
+    this.setState({ step: ++this.state.step });
+  };
+
   setBudget = budget => {
     this.setState({ budget });
     this.stepForward();
@@ -57,24 +61,9 @@ class App extends React.Component {
     this.stepForward();
   };
 
-  stepForward = () => {
-    this.setState({ step: ++this.state.step });
-  };
-
   render() {
     const { budget, items, step } = this.state;
     const { classes } = this.props; 
-
-    // let components = [
-    //   <WelcomeScreen onNext={this.stepForward} />,
-    //   <BudgetForm onSubmit={this.setBudget}/>,
-    //   <BudgetCalculator 
-    //     budget={budget} 
-    //     items={items} 
-    //     onSubmit={this.handleSubmit} 
-    //   />,
-    //   <ThankYouScreen />
-    // ];
 
     return (
       <div className={classes.container}>
@@ -94,7 +83,6 @@ class App extends React.Component {
         <Step number={3} currentStep={this.state.step}>
           <ThankYouScreen />
         </Step>
-        {/* {components[step]} */}
       </div>
     );
   }

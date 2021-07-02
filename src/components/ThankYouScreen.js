@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
-import ContentArea from './ContentArea';
+import ContentArea from './shared/ContentArea';
 
 const ThankYouScreen = () => (
   <ContentArea>

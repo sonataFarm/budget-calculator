@@ -3,10 +3,10 @@ import _ from 'lodash';
 import { Tooltip, Typography, Button, withStyles } from '@material-ui/core';
 import PriceRange from '../util/price-range';
 import currency from '../util/currency';
-import MultiCarousel from './MultiCarousel';
-import OptionsList from './OptionsList';
-import Option from './Option';
-import ContentArea from './ContentArea';
+import MultiCarousel from './shared/MultiCarousel';
+import OptionsList from './shared/OptionsList';
+import Option from './shared/Option';
+import ContentArea from './shared/ContentArea';
 
 const styles = {
   carouselContainer: {
