@@ -1,46 +1,30 @@
 import React from 'react';
 import _ from 'lodash';
-import { fade } from '@material-ui/core/styles/colorManipulator';
 import { Tooltip, Typography, Button, withStyles } from '@material-ui/core';
 import PriceRange from '../util/price-range';
 import currency from '../util/currency';
 import MultiCarousel from './MultiCarousel';
 import OptionsList from './OptionsList';
 import Option from './Option';
+import ContentArea from './ContentArea';
 
-const styles = theme => ({
-  container: {
-    width: '80%',
-    height: 'auto',
-    padding: theme.spacing(3),
-    backgroundColor: fade('#ffffff', 0.8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    borderRadius: 30,
-    '& > *': {
-      margin: theme.spacing(1),
-    },
-    '& > div:nth-of-type(1)': {
-      width: '92%' // resize MultiCarousel the hacky way :/
-    } 
-  },
-  budget: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center'
+const styles = {
+  carouselContainer: {
+    width: '100%'
   }
-});
+};
 
 class BudgetCalculator extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      // each Array index corresponds to an Item Type.
-      // its value corresponds to an item of that type or null.
-      selectedItems: new Array(this.itemTypes.length).fill(null)
+      // each property on SelectedItems corresponds to an Item Type.
+      // Its value corresponds to an item of that type, or null.
+      selectedItems: this.itemTypes.reduce((o, t) => {
+        o[t.name] = null;
+        return o;
+      }, {})
     };
   }
 
@@ -51,10 +35,7 @@ class BudgetCalculator extends React.Component {
   };
 
   get selectedItemsPriceRange() {
-    const selectedItems = this.props.items.filter(
-      i => this.state.selectedItems.includes(i.name)
-    );
-
+    const selectedItems = _.compact(Object.values(this.state.selectedItems));
     return PriceRange.fromItems(selectedItems);
   }
 
@@ -71,8 +52,8 @@ class BudgetCalculator extends React.Component {
               <div> {/* This div required for tooltip to render */}
                 <Option 
                   value={i.name} 
-                  selected={this.state.selectedItems[idx] === i.name}
-                  onClick={this.handleUpdateSelectedItems(idx, i.name)}
+                  selected={this.state.selectedItems[t.name] === i}
+                  onClick={this.handleUpdateSelectedItems(t, i)}
                 />
               </div>
             </Tooltip>
@@ -82,13 +63,13 @@ class BudgetCalculator extends React.Component {
     });
   };
 
-  handleUpdateSelectedItems = (itemTypeIdx, itemName) => () => {
-    const nextSelectedItems = [ ...this.state.selectedItems ];
+  handleUpdateSelectedItems = (itemType, item) => () => {
+    const nextSelectedItems = { ...this.state.selectedItems };
 
-    if (this.state.selectedItems[itemTypeIdx] === itemName) {
-      nextSelectedItems[itemTypeIdx] = null;
+    if (this.state.selectedItems[itemType.name] === item) {
+      nextSelectedItems[itemType.name] = null;
     } else {
-      nextSelectedItems[itemTypeIdx] = itemName;
+      nextSelectedItems[itemType.name] = item;
     }
 
     this.setState({ selectedItems: nextSelectedItems })
@@ -98,22 +79,24 @@ class BudgetCalculator extends React.Component {
     const { classes, budget, onSubmit } = this.props;
 
     return (
-      <div className={classes.container}>
+      <ContentArea width="80%">
         <Typography variant="h4" align="center">
           Let your imagination run wild.
         </Typography>
         <Typography variant="subtitle1" align="center">
           Choose up to one item from each category.
         </Typography>
-        <MultiCarousel 
-          columns={3} 
-          autoPlay={false} 
-          animation="slide" 
-          navButtonsAlwaysVisible
-        > 
-          {this.renderItemsLists()}
-        </MultiCarousel>
-        <div className={classes.budgets}>
+        <div className={classes.carouselContainer}>
+          <MultiCarousel 
+            columns={3} 
+            autoPlay={false} 
+            animation="slide" 
+            navButtonsAlwaysVisible
+          > 
+            {this.renderItemsLists()}
+          </MultiCarousel>
+        </div>
+        <div>
           <Typography variant="subtitle1" align="center">
             Your budget: {currency.usd(budget)}
           </Typography>
@@ -135,7 +118,7 @@ class BudgetCalculator extends React.Component {
         >
           Submit
         </Button>
-      </div>
+      </ContentArea>
     );
   }
 }
