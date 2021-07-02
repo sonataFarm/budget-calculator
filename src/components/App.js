@@ -27,7 +27,7 @@ const styles = {
 class App extends React.Component {
   constructor(props) {
     super(props);
-    
+
     this.state = { 
       items: [], 
       budget: undefined,
@@ -64,7 +64,7 @@ class App extends React.Component {
 
     let components = [
       <WelcomeScreen onNext={this.stepForward} />,
-      <BudgetForm onNext={this.setBudget}/>,
+      <BudgetForm onSubmit={this.setBudget}/>,
       <BudgetCalculator 
         budget={budget} 
         items={items} 
